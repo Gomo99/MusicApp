@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.37301.10 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusciApp", "MusciApp.csproj", "{111A97C0-2B84-4AE3-9653-8EF25D1FB0BE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{111A97C0-2B84-4AE3-9653-8EF25D1FB0BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{111A97C0-2B84-4AE3-9653-8EF25D1FB0BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{111A97C0-2B84-4AE3-9653-8EF25D1FB0BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{111A97C0-2B84-4AE3-9653-8EF25D1FB0BE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E054477D-323B-4A10-B076-D52168645BDC}
+	EndGlobalSection
+EndGlobal

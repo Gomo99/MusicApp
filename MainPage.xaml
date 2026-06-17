@@ -1,0 +1,89 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:MusciApp.ViewModels"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="MusciApp.MainPage"
+             x:DataType="vm:MainViewModel"
+             Title="Music Player">
+
+    <Grid RowDefinitions="*,Auto" Padding="15" ColumnSpacing="10" RowSpacing="8">
+
+        <!-- Playlist -->
+        <CollectionView Grid.Row="0"
+                        ItemsSource="{Binding Playlist}"
+                        SelectedItem="{Binding SelectedTrack, Mode=TwoWay}"
+                        SelectionMode="Single">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="vm:TrackModel">
+                    <Label Text="{Binding DisplayName}" Padding="5" FontSize="16"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Label Text="No tracks added. Use 'Add Files' or type a path."
+                       HorizontalOptions="Center" VerticalOptions="Center"
+                       FontSize="18" Opacity="0.5"/>
+            </CollectionView.EmptyView>
+        </CollectionView>
+
+        <!-- Controls -->
+        <VerticalStackLayout Grid.Row="1" Spacing="10">
+            <Label Text="{Binding CurrentTrackName}" FontSize="18" FontAttributes="Bold" 
+                   HorizontalOptions="Center" Margin="0,0,0,5"/>
+
+            <!-- Seek bar -->
+            <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="5">
+                <Label Grid.Column="0" Text="{Binding CurrentPosition, StringFormat='{0:mm\\:ss}'}" />
+                <Slider Grid.Column="1" x:Name="seekSlider"
+                        Minimum="0" Maximum="{Binding Duration}"
+                        Value="{Binding CurrentPosition, Mode=TwoWay}"
+                        ThumbColor="#6200EE"
+                        DragCompleted="OnSeekDragCompleted"/>
+                <Label Grid.Column="2" Text="{Binding Duration, StringFormat='{0:mm\\:ss}'}" />
+            </Grid>
+
+            <!-- Transport buttons -->
+            <HorizontalStackLayout Spacing="10" HorizontalOptions="Center">
+                <Button Text="⏮" Command="{Binding PreviousCommand}" WidthRequest="60" HeightRequest="60"
+                        FontSize="24" CornerRadius="30"/>
+                <Button Text="⏯" Command="{Binding PlayCommand}" WidthRequest="80" HeightRequest="60"
+                        FontSize="28" CornerRadius="30"
+                        IsEnabled="{Binding IsNotPlaying}"/>
+                <Button Text="⏸" Command="{Binding PauseCommand}" WidthRequest="80" HeightRequest="60"
+                        FontSize="28" CornerRadius="30"
+                        IsEnabled="{Binding IsPlaying}"/>
+                <Button Text="⏹" Command="{Binding StopCommand}" WidthRequest="60" HeightRequest="60"
+                        FontSize="24" CornerRadius="30"/>
+                <Button Text="⏭" Command="{Binding NextCommand}" WidthRequest="60" HeightRequest="60"
+                        FontSize="24" CornerRadius="30"/>
+            </HorizontalStackLayout>
+
+            <!-- Volume -->
+            <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
+                <Label Text="🔈" FontSize="20" VerticalOptions="Center"/>
+                <Slider Minimum="0" Maximum="1" Value="{Binding Volume}" WidthRequest="150" />
+                <Label Text="🔊" FontSize="20" VerticalOptions="Center"/>
+            </HorizontalStackLayout>
+
+            <!-- Add tracks -->
+            <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
+                <Button Text="Add Files" Command="{Binding AddFilesCommand}"
+                        BackgroundColor="#6200EE" TextColor="White" FontSize="16"
+                        Padding="20,10"/>
+                <Entry Text="{Binding ManualPath}" 
+                       Placeholder="or paste full path..."
+                       WidthRequest="250"
+                       ReturnCommand="{Binding AddManualPathCommand}" />
+                <Button Text="Add Path" Command="{Binding AddManualPathCommand}"
+                        BackgroundColor="#6200EE" TextColor="White"/>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+        <!-- Hidden MediaElement -->
+        <toolkit:MediaElement x:Name="audioPlayer"
+                              ShouldAutoPlay="False"
+                              ShouldShowPlaybackControls="False"
+                              IsVisible="False"
+                              Grid.RowSpan="2"/>
+    </Grid>
+</ContentPage>
